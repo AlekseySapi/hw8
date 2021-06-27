@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Main {
 
-    static long startTime, endTime;
+    static long startTime, endTime, aTime, bTime;
 
     public static void main(String[] args) {
 
@@ -27,11 +27,11 @@ public class Main {
                 - Возведение в степень
 */
 
+
 //        Задание 8.4
         Item aDataItem;
         int aKey;
         int size = 50;
-
 
         startTime = System.nanoTime();
         HashTable hashTable = new HashTable(size);
@@ -42,7 +42,8 @@ public class Main {
             hashTable.insert(aDataItem);
         }
         endTime = System.nanoTime();
-        System.out.println("Время заполнения хеш-таблицы методом линейного пробирования: " + (endTime - startTime) + " нс");
+        aTime = endTime - startTime;
+        System.out.println("Время заполнения хеш-таблицы методом линейного пробирования: " + aTime + " нс");
 
         hashTable.insert(new Item(777));
         hashTable.insert(new Item(123));
@@ -52,6 +53,37 @@ public class Main {
         System.out.println(hashTable.find(777).getKey());
         hashTable.delete(123);
 
+        System.out.println();
+
+
+        //        Задание 8.5
+        Item bDataItem;
+        int bKey;
+        int sizeNew = 50;
+
+        startTime = System.nanoTime();
+        HashTableDouble dHashTable = new HashTableDouble(sizeNew);
+        rand = new Random();
+        for (int j = 0; j < 15; j++) {
+            bKey = rand.nextInt(999);
+            bDataItem = new Item(bKey);
+            dHashTable.insert(bDataItem);
+        }
+        endTime = System.nanoTime();
+        bTime = endTime - startTime;
+        System.out.println("Время заполнения хеш-таблицы двойным хешированием: " + bTime + " нс");
+
+        dHashTable.insert(new Item(777));
+        dHashTable.insert(new Item(123));
+        dHashTable.insert(new Item(123));   // Коллизия
+        dHashTable.display();
+
+        System.out.println(dHashTable.find(777).getKey());
+        dHashTable.delete(123);
+
+        System.out.println();
+
+        System.out.println("Метод двойного хеширования быстрее на " + (aTime - bTime) + " нс");
 
     }
 
